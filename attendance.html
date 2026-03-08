@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<!-- Mobile Responsive -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Library Attendance</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f4f7;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+padding:15px;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+width:100%;
+max-width:350px;
+}
+
+h2{
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:1px solid #ddd;
+border-radius:5px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:15px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+.dashboard{
+margin-top:20px;
+background:#f8fafc;
+padding:10px;
+border-radius:5px;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Library Attendance</h2>
+
+<input id="name" placeholder="Student Name">
+
+<input id="seat" placeholder="Seat Number">
+
+<input id="mobile" placeholder="Mobile Number">
+
+<button onclick="submitAttendance()">Submit Attendance</button>
+
+<p id="msg"></p>
+
+<div class="dashboard">
+
+<p>Total Seats: 45</p>
+
+<p>Present Today: <span id="present">0</span></p>
+
+<p>Absent: <span id="absent">45</span></p>
+
+</div>
+
+</div>
+
+<script>
+
+const API_URL="https://script.google.com/macros/s/AKfycbz6E11WSnLwf0RlI67d0AaiViht9tMx3aGyBY1AH0X9IAjSJ6SmbmAwu8V-M6iJbo7q/exec";
+
+let present=0;
+
+async function submitAttendance(){
+
+let name=document.getElementById("name").value;
+let seat=document.getElementById("seat").value;
+let mobile=document.getElementById("mobile").value;
+
+let data={
+name:name,
+seat:seat,
+mobile:mobile
+};
+
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify(data)
+});
+
+document.getElementById("msg").innerText="Attendance Saved";
+
+present++;
+
+document.getElementById("present").innerText=present;
+
+document.getElementById("absent").innerText=45-present;
+
+}
+
+</script>
+
+</body>
+</html>
